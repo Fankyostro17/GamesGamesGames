@@ -1,0 +1,44 @@
+{
+  "questions": [
+    {
+      "id": 1,
+      "question": "Chi è il creatore del videogioco 'Half-Life'?",
+      "answers": ["Valve", "Nintendo", "Blizzard", "Epic Games"],
+      "correctIndex": 0,
+      "difficulty": "hard",
+      "category": "videogames"
+    },
+    {
+      "id": 2,
+      "question": "In quale anno è stato rilasciato 'The Witcher 3'?",
+      "answers": ["2013", "2015", "2017", "2016"],
+      "correctIndex": 1,
+      "difficulty": "hard",
+      "category": "videogames"
+    },
+    {
+      "id": 3,
+      "question": "Qual è il protagonista di 'Metal Gear Solid'?",
+      "answers": ["Solid Snake", "Raiden", "Big Boss", "Venom Snake"],
+      "correctIndex": 0,
+      "difficulty": "hard",
+      "category": "videogames"
+    },
+    {
+      "id": 4,
+      "question": "In 'Dark Souls', quale boss è famoso per la frase 'You Died'?",
+      "answers": ["Ornstein e Smough", "Gwyn, Lord of Cinder", "Capra Demon", "Seath il Senzacorona"],
+      "correctIndex": 0,
+      "difficulty": "hard",
+      "category": "videogames"
+    },
+    {
+      "id": 5,
+      "question": "Quale serie di giochi ha il personaggio Master Chief?",
+      "answers": ["Halo", "Destiny", "Mass Effect", "Gears of War"],
+      "correctIndex": 0,
+      "difficulty": "hard",
+      "category": "videogames"
+    }
+  ]
+}

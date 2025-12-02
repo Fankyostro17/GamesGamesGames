@@ -1,0 +1,44 @@
+{
+  "questions": [
+    {
+      "id": 1,
+      "question": "Quanto fa 7 + 5?",
+      "answers": ["10", "12", "13", "14"],
+      "correctIndex": 1,
+      "difficulty": "easy",
+      "category": "maths"
+    },
+    {
+      "id": 2,
+      "question": "Qual è il valore di 9 x 3?",
+      "answers": ["27", "24", "21", "30"],
+      "correctIndex": 0,
+      "difficulty": "easy",
+      "category": "maths"
+    },
+    {
+      "id": 3,
+      "question": "Quanto fa 15 - 7?",
+      "answers": ["5", "8", "9", "7"],
+      "correctIndex": 1,
+      "difficulty": "easy",
+      "category": "maths"
+    },
+    {
+      "id": 4,
+      "question": "Quanto fa 16 ÷ 4?",
+      "answers": ["2", "4", "6", "8"],
+      "correctIndex": 1,
+      "difficulty": "easy",
+      "category": "maths"
+    },
+    {
+      "id": 5,
+      "question": "Qual è il numero successivo: 2, 4, 6, ...?",
+      "answers": ["7", "8", "9", "10"],
+      "correctIndex": 1,
+      "difficulty": "easy",
+      "category": "maths"
+    }
+  ]
+}

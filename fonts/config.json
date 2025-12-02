@@ -1,0 +1,46 @@
+{
+  "name": "",
+  "css_prefix_text": "",
+  "css_use_suffix": false,
+  "hinting": true,
+  "units_per_em": 1000,
+  "ascent": 850,
+  "glyphs": [
+    {
+      "uid": "9bd60140934a1eb9236fd7a8ab1ff6ba",
+      "css": "load",
+      "code": 59444,
+      "src": "fontelico"
+    },
+    {
+      "uid": "186dec7a13156bbe2550790c158fb85d",
+      "css": "crown",
+      "code": 59460,
+      "src": "fontelico"
+    },
+    {
+      "uid": "36ef9feb0754335302784521267a9ad4",
+      "css": "crown-plus",
+      "code": 59461,
+      "src": "fontelico"
+    },
+    {
+      "uid": "ec8496ef645f3be7b28147ec60cd9ab1",
+      "css": "crown-minus",
+      "code": 59462,
+      "src": "fontelico"
+    },
+    {
+      "uid": "5211af474d3a9848f67f945e2ccaf143",
+      "css": "cancel",
+      "code": 59392,
+      "src": "fontawesome"
+    },
+    {
+      "uid": "422e07e5afb80258a9c4ed1706498f8a",
+      "css": "circle-empty",
+      "code": 61708,
+      "src": "fontawesome"
+    }
+  ]
+}

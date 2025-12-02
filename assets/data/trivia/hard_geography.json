@@ -1,0 +1,44 @@
+{
+  "questions": [
+    {
+      "id": 1,
+      "question": "Qual è la montagna più alta del mondo?",
+      "answers": ["K2", "Everest", "Kangchenjunga", "Lhotse"],
+      "correctIndex": 1,
+      "difficulty": "hard",
+      "category": "geography"
+    },
+    {
+      "id": 2,
+      "question": "Quale paese ha il maggior numero di fusi orari?",
+      "answers": ["USA", "Russia", "Canada", "Cina"],
+      "correctIndex": 1,
+      "difficulty": "hard",
+      "category": "geography"
+    },
+    {
+      "id": 3,
+      "question": "Qual è il deserto più grande del mondo?",
+      "answers": ["Sahara", "Gobi", "Kalahari", "Antartico"],
+      "correctIndex": 3,
+      "difficulty": "hard",
+      "category": "geography"
+    },
+    {
+      "id": 4,
+      "question": "Qual è il fiume più lungo del mondo?",
+      "answers": ["Nilo", "Amazzonia", "Mississippi", "Yangtze"],
+      "correctIndex": 0,
+      "difficulty": "hard",
+      "category": "geography"
+    },
+    {
+      "id": 5,
+      "question": "Quale oceano è il più grande?",
+      "answers": ["Atlantico", "Indiano", "Pacifico", "Artico"],
+      "correctIndex": 2,
+      "difficulty": "hard",
+      "category": "geography"
+    }
+  ]
+}

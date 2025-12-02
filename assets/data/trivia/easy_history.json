@@ -1,0 +1,44 @@
+{
+  "questions": [
+    {
+      "id": 1,
+      "question": "Chi era il primo presidente degli Stati Uniti?",
+      "answers": ["Abraham Lincoln", "George Washington", "Thomas Jefferson", "John Adams"],
+      "correctIndex": 1,
+      "difficulty": "easy",
+      "category": "history"
+    },
+    {
+      "id": 2,
+      "question": "In che anno è caduto l’Impero Romano d’Occidente?",
+      "answers": ["410", "476", "500", "395"],
+      "correctIndex": 1,
+      "difficulty": "easy",
+      "category": "history"
+    },
+    {
+      "id": 3,
+      "question": "Chi ha scoperto l’America nel 1492?",
+      "answers": ["Cristoforo Colombo", "Marco Polo", "Ferdinando Magellano", "Vasco da Gama"],
+      "correctIndex": 0,
+      "difficulty": "easy",
+      "category": "history"
+    },
+    {
+      "id": 4,
+      "question": "Quale rivoluzione iniziò nel 1789?",
+      "answers": ["Rivoluzione francese", "Rivoluzione americana", "Rivoluzione industriale", "Rivoluzione russa"],
+      "correctIndex": 0,
+      "difficulty": "easy",
+      "category": "history"
+    },
+    {
+      "id": 5,
+      "question": "Chi era Napoleone Bonaparte?",
+      "answers": ["Imperatore francese", "Re d’Inghilterra", "Czar di Russia", "Re di Spagna"],
+      "correctIndex": 0,
+      "difficulty": "easy",
+      "category": "history"
+    }
+  ]
+}

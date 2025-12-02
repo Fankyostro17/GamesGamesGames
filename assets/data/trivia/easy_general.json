@@ -1,0 +1,44 @@
+{
+  "questions": [
+    {
+      "id": 1,
+      "question": "Quale pianeta è conosciuto come il Pianeta Rosso?",
+      "answers": ["Venere", "Marte", "Giove", "Mercurio"],
+      "correctIndex": 1,
+      "difficulty": "easy",
+      "category": "general"
+    },
+    {
+      "id": 2,
+      "question": "Qual è la capitale della Francia?",
+      "answers": ["Parigi", "Lione", "Marsiglia", "Tolosa"],
+      "correctIndex": 0,
+      "difficulty": "easy",
+      "category": "general"
+    },
+    {
+      "id": 3,
+      "question": "Qual è l’animale più grande del mondo?",
+      "answers": ["Squalo balena", "Balena azzurra", "Elefante africano", "Orca"],
+      "correctIndex": 1,
+      "difficulty": "easy",
+      "category": "general"
+    },
+    {
+      "id": 4,
+      "question": "Quante stagioni ci sono in un anno?",
+      "answers": ["3", "4", "5", "6"],
+      "correctIndex": 1,
+      "difficulty": "easy",
+      "category": "general"
+    },
+    {
+      "id": 5,
+      "question": "Quale lingua si parla in Brasile?",
+      "answers": ["Spagnolo", "Portoghese", "Francese", "Inglese"],
+      "correctIndex": 1,
+      "difficulty": "easy",
+      "category": "general"
+    }
+  ]
+}

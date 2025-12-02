@@ -1,0 +1,44 @@
+{
+  "questions": [
+    {
+      "id": 1,
+      "question": "Qual è il simbolo chimico dell’Ossigeno?",
+      "answers": ["O", "Ox", "Og", "Os"],
+      "correctIndex": 0,
+      "difficulty": "medium",
+      "category": "science"
+    },
+    {
+      "id": 2,
+      "question": "Quale organo produce l’insulina nel corpo umano?",
+      "answers": ["Fegato", "Pancreas", "Reni", "Polmoni"],
+      "correctIndex": 1,
+      "difficulty": "medium",
+      "category": "science"
+    },
+    {
+      "id": 3,
+      "question": "Quale particella ha carica negativa?",
+      "answers": ["Protone", "Elettrone", "Neutrone", "Positrone"],
+      "correctIndex": 1,
+      "difficulty": "medium",
+      "category": "science"
+    },
+    {
+      "id": 4,
+      "question": "Qual è la velocità della luce nel vuoto (approssimativa)?",
+      "answers": ["300.000 km/s", "150.000 km/s", "1.000 km/s", "30.000 km/s"],
+      "correctIndex": 0,
+      "difficulty": "medium",
+      "category": "science"
+    },
+    {
+      "id": 5,
+      "question": "Quale gas è più abbondante nell’atmosfera terrestre?",
+      "answers": ["Ossigeno", "Azoto", "Anidride carbonica", "Elio"],
+      "correctIndex": 1,
+      "difficulty": "medium",
+      "category": "science"
+    }
+  ]
+}
