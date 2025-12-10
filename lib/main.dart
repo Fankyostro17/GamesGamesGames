@@ -752,6 +752,11 @@ class _SuperTrisState extends State<SuperTris> {
     (_) => List.generate(3, (_) => List.filled(9, "")),
   );
 
+  List<List<String>> bigBoard = List.generate(
+    3,
+    (_) => List.filled(9, ""),
+  );
+
   String currentPlayer = "X";
   int? forcedBoard; // da 0 a 8
 
@@ -759,6 +764,11 @@ class _SuperTrisState extends State<SuperTris> {
     if (forcedBoard != null && forcedBoard != bigIndex) return;
 
     if (board[bigIndex ~/ 3][bigIndex % 3][cellIndex] != "") return;
+
+    //print(board);
+    //print(board.length);
+    //print(board[0].length);
+    //print(board[0][0].length);
 
     setState(() {
       board[bigIndex ~/ 3][bigIndex % 3][cellIndex] = currentPlayer;
@@ -769,6 +779,76 @@ class _SuperTrisState extends State<SuperTris> {
 
       currentPlayer = currentPlayer == "X" ? "O" : "X";
     });
+
+    String vincitore = isFinish();
+    if(vincitore != ""){
+      print(vincitore);
+    }
+  }
+
+  List<dynamic> isFinish() {
+    List<dynamic> out = [0, 0, ""];
+    for (int i = 0; i < board.length; i++) {
+      for (int j = 0; j < board[i].length; j++) {
+        if(board[i][j][0] == board[i][j][1] &&
+         board[i][j][0] == board[i][j][2] &&
+          (board[i][j][0] != "" &&
+          board[i][j][1] != "" &&
+          board[i][j][2] != "")){
+          return board[i][j][0];
+        }
+        if(board[i][j][3] == board[i][j][4] &&
+         board[i][j][3] == board[i][j][5] &&
+          (board[i][j][3] != "" && 
+          board[i][j][4] != "" &&
+          board[i][j][5] != "")){
+          return board[i][j][3];
+        }
+        if(board[i][j][6] == board[i][j][7] &&
+         board[i][j][6] == board[i][j][8] &&
+          (board[i][j][6] != "" && 
+          board[i][j][7] != "" &&
+          board[i][j][8] != "")){
+          return board[i][j][6];
+        }
+        if(board[i][j][0] == board[i][j][3] &&
+         board[i][j][0] == board[i][j][6] &&
+          (board[i][j][0] != "" && 
+          board[i][j][3] != "" &&
+          board[i][j][6] != "")){
+          return board[i][j][0];
+        }
+        if(board[i][j][1] == board[i][j][4] &&
+         board[i][j][1] == board[i][j][7] &&
+          (board[i][j][1] != "" && 
+          board[i][j][4] != "" &&
+          board[i][j][7] != "")){
+          return board[i][j][1];
+        }
+        if(board[i][j][2] == board[i][j][5] &&
+         board[i][j][2] == board[i][j][8] &&
+          (board[i][j][2] != "" && 
+          board[i][j][5] != "" &&
+          board[i][j][8] != "")){
+          return board[i][j][2];
+        }
+        if(board[i][j][0] == board[i][j][4] &&
+         board[i][j][0] == board[i][j][8] &&
+          (board[i][j][0] != "" && 
+          board[i][j][4] != "" &&
+          board[i][j][8] != "")){
+          return board[i][j][0];
+        }
+        if(board[i][j][2] == board[i][j][4] &&
+         board[i][j][2] == board[i][j][6] &&
+          (board[i][j][2] != "" && 
+          board[i][j][4] != "" &&
+          board[i][j][6] != "")){
+          return board[i][j][2];
+        }
+      }
+    }
+    return "";
   }
 
   bool isBoardFull(int index) {
