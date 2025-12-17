@@ -153,7 +153,7 @@ class _SetGamesState extends State<SetGames> {
                           title: "Super Tris"
                         )
                       : _kakuroSelected ?
-                        KakuroDifficulty(
+                        KakuroPuzzle(
                           title: "Kakuro Difficulty",
                         )
                       : AlertDialog(
@@ -239,16 +239,98 @@ class _ImageButtonState extends State<ImageButton> {
 }
 
 class KakuroPuzzle extends StatefulWidget {
-  const KakuroPuzzle({super.key, required this.title, required this.size});
+  const KakuroPuzzle({super.key, required this.title, /*required this.size*/});
   
+  final String title;
+  //final int size;
+
+  @override
+  //State<KakuroPuzzle> createState() => _Kakuro();
+  State<KakuroPuzzle> createState() => _KakuroDifficultyState();
+}
+
+class _KakuroDifficultyState extends State<KakuroPuzzle> {
+  int selectedSize = 3;
+
+  String textLabel(){
+    if(selectedSize == 1){
+      return "4x4";
+    } else if (selectedSize == 2){
+      return "6x6";
+    } else if (selectedSize == 3){
+      return "8x8";
+    } else if (selectedSize == 4){
+      return "9x11";
+    } else {
+      return "9x17";
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text('Imposta difficoltà del gioco')),
+      body: Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              'Seleziona la grandezza della tabella: ${textLabel()}',
+              style: const TextStyle(fontSize: 18),
+            ),
+            Slider(
+              value: selectedSize.toDouble(),
+              min: 1,
+              max: 5,
+              divisions: 4,
+              label: textLabel(),
+              onChanged: (value) {
+                setState(() {
+                  selectedSize = value.toInt();
+                });
+              },
+            ),
+
+            const SizedBox(height: 40),
+
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => KakuroStateful(
+                      title: 'Kakuro',
+                      size: selectedSize,
+                    ),
+                  ),
+                );
+              },
+              // Button label
+              child: const Text('Inizia il gioco'),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class KakuroStateful extends StatefulWidget{
   final String title;
   final int size;
 
+  const KakuroStateful({
+    super.key,
+    required this.title,
+    required this.size,
+  });
+
   @override
-  State<KakuroPuzzle> createState() => _Kakuro();
+  State<KakuroStateful> createState() => _Kakuro();
 }
 
-class KakuroDifficulty extends StatelessWidget {
+/*class KakuroDifficulty extends StatelessWidget {
   final String title;
   const KakuroDifficulty({super.key, required this.title});
 
@@ -260,7 +342,7 @@ class KakuroDifficulty extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            ElevatedButton(
+            /*ElevatedButton(
               onPressed: () {
                 Navigator.push(context, MaterialPageRoute(
                   builder: (context) => KakuroPuzzle(size: 5, title: "Kakuro 5x5"),
@@ -275,15 +357,15 @@ class KakuroDifficulty extends StatelessWidget {
                 ));
               },
               child: Text("7 x 7"),
-            ),
+            ),*/
           ],
         ),
       ),
     );
   }
-}
+}*/
 
-class _Kakuro extends State<KakuroPuzzle> {
+class _Kakuro extends State<KakuroStateful> {
   late List<List<KakuroCell>> grid;
   int selectedRow = -1;
   int selectedCol = -1;
