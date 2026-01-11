@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'CustomIconsSuperTris.dart';
 import 'dart:convert';
 import 'package:flutter/services.dart' show rootBundle;
+import 'package:http/http.dart' as http;
 
 void main() {
   runApp(const MyApp());
@@ -618,25 +619,19 @@ class _TriviaGames extends State<TriviaDifficulty>{
           children: [
             ElevatedButton(
               onPressed: () {
-                Navigator.push(context,
-                  MaterialPageRoute(builder: (context) =>
-                    TriviaGame(difficulty: "easy")));
+                _selectCategory("easy");
               },
               child: Text("Facile"),
             ),
             ElevatedButton(
               onPressed: () {
-                Navigator.push(context,
-                  MaterialPageRoute(builder: (context) =>
-                    TriviaGame(difficulty: "medium")));
+                _selectCategory("medium");
               },
               child: Text("Medio"),
             ),
             ElevatedButton(
               onPressed: () {
-                Navigator.push(context,
-                  MaterialPageRoute(builder: (context) =>
-                    TriviaGame(difficulty: "hard")));
+                _selectCategory("hard");
               },
               child: Text("Difficile"),
             ),
@@ -645,12 +640,96 @@ class _TriviaGames extends State<TriviaDifficulty>{
       ),
     );
   }
+
+  void _selectCategory(String difficulty) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => TriviaCategorySelection(difficulty: difficulty),
+      ),
+    );
+  }
 }
 
+class TriviaCategorySelection extends StatelessWidget {
+  final String difficulty;
+
+  const TriviaCategorySelection({super.key, required this.difficulty});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text("Scegli Categoria")),
+      body: Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: Column(
+          children: [
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => TriviaGame(difficulty: difficulty, category: "Geografia"),
+                  ),
+                );
+              },
+              child: Text("Geografia"),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => TriviaGame(difficulty: difficulty, category: "Scienza"),
+                  ),
+                );
+              },
+              child: Text("Scienza"),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => TriviaGame(difficulty: difficulty, category: "Storia"),
+                  ),
+                );
+              },
+              child: Text("Storia"),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => TriviaGame(difficulty: difficulty, category: "Arte"),
+                  ),
+                );
+              },
+              child: Text("Arte"),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => TriviaGame(difficulty: difficulty, category: "Generale"),
+                  ),
+                );
+              },
+              child: Text("Generale"),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
 
 class TriviaGame extends StatefulWidget {
   final String difficulty;
-  const TriviaGame({super.key, required this.difficulty});
+  final String category;
+  const TriviaGame({super.key, required this.difficulty, required this.category});
 
   @override
   State<TriviaGame> createState() => _TriviaGameState();
@@ -669,13 +748,22 @@ class _TriviaGameState extends State<TriviaGame> {
   }
 
   Future<void> loadRandomQuestion() async {
-    final filtered = await TriviaRepository.loadByDifficulty(widget.difficulty);
-    
-    filtered.shuffle();
     setState(() {
-      question = filtered.first;
-      loading = false;
+      loading = true;
     });
+    
+    try{
+      final q = await TriviaRepository.loadRandomQuestionByDifficultyAndCategory(widget.difficulty, widget.category);
+      setState(() {
+        question = q;
+        loading = false;
+      });
+    } catch (e) {
+      print("Errore nel caricamento della domanda: $e");
+      setState(() {
+        loading = false;
+      });
+    }
   }
 
   void checkAnswer(int index) {
@@ -779,6 +867,41 @@ class TriviaQuestion {
 }
 
 class TriviaRepository {
+  static const baseUrl = "http://127.0.0.1:9000";
+
+  static Future<TriviaQuestion> loadRandomQuestionByDifficultyAndCategory(String difficulty, String category) async {
+    final url = Uri.parse('$baseUrl/trivia/generate?difficulty=$difficulty&topic=$category');
+    final response = await http.get(url).timeout(Duration(seconds: 15));
+
+    print("Risposta dal server: ${response.body}");
+
+    if (response.statusCode == 200){
+      final data = jsonDecode(response.body);
+      
+      if (data.containsKey('error')){
+        throw Exception('Errore dal server: ${data['error']}');
+      }
+
+      int? correctIndex = data['correctIndex'];
+      if (correctIndex == null || correctIndex < 0 || correctIndex >= (data['answers'] as List).length) {
+        throw Exception('Risposta del server mancante dell\'indice della risposta corretta');
+      }
+
+      return TriviaQuestion(
+        id: -1,
+        question: data['question'],
+        answers: List<String>.from(data['answers']),
+        correctIndex: correctIndex,
+        difficulty: difficulty,
+        category: data['category'] ?? category,
+      );
+    } else {
+      throw Exception('Errore HTTP: ${response.statusCode} - ${response.body}');
+    }
+  }
+}
+
+/*class TriviaRepository {
   static List<TriviaQuestion> _cache = [];
 
   static Future<List<TriviaQuestion>> loadAllQuestions() async {
@@ -816,7 +939,7 @@ class TriviaRepository {
     final all = await loadAllQuestions();
     return all.where((q) => q.difficulty == difficulty).toList();
   }
-}
+}*/
 
 class SuperTris extends StatefulWidget {
   const SuperTris({super.key, required this.title});
@@ -841,32 +964,120 @@ class _SuperTrisState extends State<SuperTris> {
 
   String currentPlayer = "X";
   int? forcedBoard; // da 0 a 8
+  bool gameOver = false;
+  String winner = "";
 
   void playCell(int bigIndex, int cellIndex) {
-    if (forcedBoard != null && forcedBoard != bigIndex) return;
+    if(gameOver) return;
 
-    if (board[bigIndex ~/ 3][bigIndex % 3][cellIndex] != "") return;
+    int r = bigIndex ~/ 3;
+    int c = bigIndex % 3;
+
+    if (bigBoard[r][c] != "") return;
+
+    if (forcedBoard != null && forcedBoard != bigIndex) {
+      int fr = forcedBoard! ~/ 3;
+      int fc = forcedBoard! % 3;
+      if (bigBoard[fr][fc] == "" && !isBoardFull(forcedBoard!)) {
+        return;
+      }
+    }
+
+    if (board[r][c][cellIndex] != "") return;
 
     setState(() {
-      board[bigIndex ~/ 3][bigIndex % 3][cellIndex] = currentPlayer;
+      board[r][c][cellIndex] = currentPlayer;
+
+      String subWinner = checkWinnerInSmallBoard(r, c);
+      if (subWinner != "") {
+        bigBoard[r][c] = subWinner;
+      } else if (isBoardFull(bigIndex)) {
+        bigBoard[r][c] = "D";
+      }
 
       forcedBoard = cellIndex;
 
-      if (isBoardFull(forcedBoard!)) forcedBoard = null;
+      if (bigBoard[forcedBoard! ~/ 3][forcedBoard! % 3] != "" || isBoardFull(forcedBoard!)) forcedBoard = null;
 
       currentPlayer = currentPlayer == "X" ? "O" : "X";
     });
 
-    String vincitore = "";
-    List<dynamic> out = isFinish();
-    if(out[2] != ""){
-      bigBoard[out[0]][out[1]] = out[2];
-      /* impostare la grafica della X o O gigante */
-      vincitore = isFinishBigBoard();
-      if(vincitore != ""){
-        /* caso di vittoria */
+    String gameWinner = isFinishBigBoard();
+    if (gameWinner != "") {
+      setState((){
+        gameOver = true;
+        winner = gameWinner;
+      });
+      _showGameOverDialog();
+      return;
+    }
+
+    if (isBigBoardFull()) {
+      setState(() {
+        gameOver = true;
+        winner = "Pareggio";
+      });
+      _showGameOverDialog();
+    }
+
+  }
+
+  bool isBigBoardFull() {
+    for (int i = 0; i < 3; i++) {
+      for (int j = 0; j < 3; j++) {
+        if (bigBoard[i][j] == "") return false;
       }
     }
+    return true;
+  }
+
+  void _showGameOverDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text("Partita terminata"),
+          content: Text(winner == "Pareggio" ? "È un pareggio!" : "Vince: $winner"),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+                resetGame();
+              },
+              child: Text("OK"),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void resetGame() {
+    setState(() {
+      board = List.generate(3, (_) => List.generate(3, (_) => List.filled(9, "")));
+      bigBoard = List.generate(3, (_) => List.filled(3, ""));
+      currentPlayer = "X";
+      forcedBoard = null;
+      gameOver = false;
+      winner = "";
+    });
+  }
+
+  String checkWinnerInSmallBoard(int r, int c) {
+    List<String> subBoard = board[r][c];
+
+    if (subBoard[0] == subBoard[1] && subBoard[0] == subBoard[2] && subBoard[0] != "") return subBoard[0];
+    if (subBoard[3] == subBoard[4] && subBoard[3] == subBoard[5] && subBoard[3] != "") return subBoard[3];
+    if (subBoard[6] == subBoard[7] && subBoard[6] == subBoard[8] && subBoard[6] != "") return subBoard[6];
+
+    if (subBoard[0] == subBoard[3] && subBoard[0] == subBoard[6] && subBoard[0] != "") return subBoard[0];
+    if (subBoard[1] == subBoard[4] && subBoard[1] == subBoard[7] && subBoard[1] != "") return subBoard[1];
+    if (subBoard[2] == subBoard[5] && subBoard[2] == subBoard[8] && subBoard[2] != "") return subBoard[2];
+
+    if (subBoard[0] == subBoard[4] && subBoard[0] == subBoard[8] && subBoard[0] != "") return subBoard[0];
+    if (subBoard[2] == subBoard[4] && subBoard[2] == subBoard[6] && subBoard[2] != "") return subBoard[2];
+
+    return "";
   }
 
   String isFinishBigBoard(){
@@ -1016,6 +1227,25 @@ class _SuperTrisState extends State<SuperTris> {
         itemBuilder: (context, bigIndex) {
           int r = bigIndex ~/ 3;
           int c = bigIndex % 3;
+
+          if(bigBoard[r][c] != "" && bigBoard[r][c] != "D"){
+            return Container(
+              margin: EdgeInsets.all(4),
+              decoration: BoxDecoration(
+                border: Border.all(
+                  color: Colors.grey,
+                  width: 3,
+                ),
+              ),
+              child: Center(
+                child: Text(
+                  bigBoard[r][c],
+                  style: TextStyle(fontSize: 60, fontWeight: FontWeight.bold),
+                ),
+              ),
+            );
+
+          }
 
           return Container(
             margin: EdgeInsets.all(4),
