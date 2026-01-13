@@ -9,16 +9,21 @@ CORS(app)
 
 # Carica del modello
 print("Carico il modello...")
-lcmodel = ChatOllama(model="gemma3:4b", temperature=0, reasoning=False)
+lcmodel = ChatOllama(model="gemma3:4b", temperature=0.2, reasoning=False)
 print("Modello caricato.")
 
 @app.route('/trivia/generate', methods=["GET"])
 def generate_trivia():
     difficulty = request.args.get("difficulty", default="easy", type=str)
     topic = request.args.get("topic", default="generale", type=str)
+    exclude_questions = request.args.get("exclude", default="", type=str)
+    
+    exclude_clause = f"Evita di ripetere queste domande: {exclude_questions}" if exclude_questions else ""
 
     prompt = f"""
     Genera una domanda di trivia su {topic} di difficoltà "{difficulty}". 
+    {exclude_clause}
+    . Evita di ripetere domande simili a quelle già fatte.
     Rispondi esclusivamente in formato JSON così:
     {{
         "question": "...",
