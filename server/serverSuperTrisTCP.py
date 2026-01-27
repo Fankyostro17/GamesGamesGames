@@ -51,7 +51,7 @@ def handle_join(data):
                 'forcedBoard': rooms[room_code]['forcedBoard']
             }, room=room_code)
     else:
-        emit('error', {'message': 'Room not found or full'})
+        emit('error', {'message': 'Room piena o non trovata'})
 
 @socketio.on('move')
 def handle_move(data):
@@ -105,6 +105,32 @@ def handle_move(data):
             'winner': state['winner']
         }, room=room_code)
         
+        if state['gameOver']:
+            socketio.start_background_task(remove_room_after_delat, room_code)
+        
+def remove_room_after_delat(room_code):
+    import time
+    time.sleep(30)
+    if room_code in rooms:
+        del rooms[room_code]
+        
+@socketio.on('disconnect')
+def hendle_disconnect():
+    disconnected_sid = request.sid
+    for room_code, room_data in list(rooms.items()):
+        if disconnected_sid in room_data['players']:
+            room_data['players'].remove(disconnected_sid)
+            if disconnected_sid in room_data['player_symbols']:
+                del room_data['player_symbols'][disconnected_sid]
+
+            if len(room_data['players']) == 1:
+                remaining_sid = room_data['players'][0]
+                socketio.emit('opponent_disconnected', room=remaining_sid)
+
+            if len(room_data['players']) == 0:
+                del rooms[room_code]
+            break
+
 def check_winner_in_small_board(state, r, c):
     sub = state['board'][r][c]
     lines = [
