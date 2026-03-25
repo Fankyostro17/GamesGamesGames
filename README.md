@@ -4,31 +4,31 @@
 Un'applicazione mobile e desktop sviluppata in Flutter che include tre giochi: Trivia, Super Tris e Kakuro. L'app permette agli utenti di registrarsi, effettuare il login e giocare in modalità single-player o multiplayer online.
 
 ## Struttura del progetto
-lib/
-├── main.dart // Entry point dell'applicazione
-├── screens/
-│ ├── SetGames.dart // Schermata principale per la selezione del gioco
-│ ├── LoginScreen.dart // Schermata di login e registrazione
-│ ├── Trivia/
-│ │ ├── TriviaDifficulty.dart // Selezione difficoltà e categoria
-│ │ ├── TriviaGame.dart // Gioco vero e proprio
-│ │ └── TriviaLeaderboard.dart // Classifica Trivia
-│ ├── SuperTris/
-│ │ ├── SuperTrisChoiceScreen.dart // Scelta modalità Super Tris
-│ │ ├── SuperTrisLocal.dart // Versione locale del gioco
-│ │ └── SuperTrisOnline.dart // Versione multiplayer online
-│ └── Kakuro/
-│ └── KakuroPuzzle.dart // Gioco Kakuro
-├── models/
-│ ├── TriviaQuestion.dart // Modello per le domande di Trivia
-│ └── Score.dart // Modello per i punteggi
-├── services/
-│ ├── ApiClient.dart // Gestione API REST per backend PHP
-│ └── DatabaseHelper.dart // Gestione database locale SQLite
-├── repositories/
-│ └── TriviaRepository.dart // Repository per caricamento domande
-└── utils/
-└── constants.dart // Costanti globali
+    lib/
+    ├── main.dart // Entry point dell'applicazione
+    ├── screens/
+    │ ├── SetGames.dart // Schermata principale per la selezione del gioco
+    │ ├── LoginScreen.dart // Schermata di login e registrazione
+    │ ├── Trivia/
+    │ │ ├── TriviaDifficulty.dart // Selezione difficoltà e categoria
+    │ │ ├── TriviaGame.dart // Gioco vero e proprio
+    │ │ └── TriviaLeaderboard.dart // Classifica Trivia
+    │ ├── SuperTris/
+    │ │ ├── SuperTrisChoiceScreen.dart // Scelta modalità Super Tris
+    │ │ ├── SuperTrisLocal.dart // Versione locale del gioco
+    │ │ └── SuperTrisOnline.dart // Versione multiplayer online
+    │ └── Kakuro/
+    │ └── KakuroPuzzle.dart // Gioco Kakuro
+    ├── models/
+    │ ├── TriviaQuestion.dart // Modello per le domande di Trivia
+    │ └── Score.dart // Modello per i punteggi
+    ├── services/
+    │ ├── ApiClient.dart // Gestione API REST per backend PHP
+    │ └── DatabaseHelper.dart // Gestione database locale SQLite
+    ├── repositories/
+    │ └── TriviaRepository.dart // Repository per caricamento domande
+    └── utils/
+    └── constants.dart // Costanti globali
 
 ## Avvio del progetto
 Assicurati di avere Flutter installato (versione >= 3.0 consigliata).
