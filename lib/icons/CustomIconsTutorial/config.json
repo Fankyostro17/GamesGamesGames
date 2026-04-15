@@ -1,0 +1,34 @@
+{
+  "name": "",
+  "css_prefix_text": "",
+  "css_use_suffix": false,
+  "hinting": true,
+  "units_per_em": 1000,
+  "ascent": 850,
+  "glyphs": [
+    {
+      "uid": "54c3330bdeed0fb9042e12d16d46c9ab",
+      "css": "right-fat",
+      "code": 59392,
+      "src": "mfglabs"
+    },
+    {
+      "uid": "fd2ed680ef900acb68836a99ec1a4de7",
+      "css": "left-fat",
+      "code": 59393,
+      "src": "mfglabs"
+    },
+    {
+      "uid": "d21293ba68a7dcfec696464ae64949e1",
+      "css": "up-fat",
+      "code": 59394,
+      "src": "mfglabs"
+    },
+    {
+      "uid": "aaf75809ac0342c81ff433bc87019072",
+      "css": "exit_to_app",
+      "code": 59395,
+      "src": "material"
+    }
+  ]
+}

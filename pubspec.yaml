@@ -37,7 +37,8 @@ dependencies:
   path_provider: ^2.1.1
   sqflite_common_ffi: ^2.3.3
   sqflite_common_ffi_web: ^1.1.1
-  socket_io_client: ^2.0.3
+  socket_io_client: ^3.1.4
+  shared_preferences: ^2.5.5
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -52,7 +53,7 @@ dev_dependencies:
   # activated in the `analysis_options.yaml` file located at the root of your
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
-  flutter_lints: ^5.0.0
+  flutter_lints: ^6.0.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -99,6 +100,16 @@ flutter:
     - family:  MyFlutterApp
       fonts:
        - asset: fonts/MyFlutterApp.ttf
+    - family: CustomIcons
+      fonts:
+        - asset: assets/fonts/CustomIcons.ttf
+    - family: CustomIconsTutorial
+      fonts:
+        - asset: assets/fonts/CustomIconsTutorial.ttf
+    - family: PressStart2P
+      fonts:
+        - asset: assets/fonts/PressStart2P-Regular.ttf
   
   assets:
     - assets/data/
+    - assets/images/

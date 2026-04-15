@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'screens/Kakuro/KakuroPuzzle.dart';
 import 'screens/Trivia/TriviaGames.dart';
+import 'screens/WorkspaceVolts/WorkspaceVolts.dart';
 import 'screens/SuperTris/SuperTrisGame.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
@@ -63,6 +64,8 @@ class SetGames extends StatefulWidget {
 class _SetGamesState extends State<SetGames> {
   String? _currentUser;
   String? _selectedGame;
+
+  final int _itemsGames = 4;
 
   void _selectGame(String game) {
     setState(() {
@@ -150,12 +153,13 @@ class _SetGamesState extends State<SetGames> {
                         mainAxisSpacing: 16,
                         childAspectRatio: 1.4,
                       ),
-                      itemCount: 3,
+                      itemCount: _itemsGames,
                       itemBuilder: (context, index) {
                         final games = [
                           {'title': 'Trivia', 'logo': '../assets/images/TriviaLogo.png'},
                           {'title': 'Super Tris', 'logo': '../assets/images/SuperTrisLogo.png'},
                           {'title': 'Kakuro', 'logo': '../assets/images/KakuroLogo.png'},
+                          {'title': 'Workspace Volts', 'logo': '../assets/images/door.png'},
                         ];
                         final game = games[index];
                         bool isSelected = _selectedGame == game['title'];
@@ -188,23 +192,25 @@ class _SetGamesState extends State<SetGames> {
                                     title: "Kakuro Difficulty",
                                     loggedUser: _currentUser,
                                   )
-                                : AlertDialog(
-                                    title: const Text("Gioco Non Selezionato"),
-                                    content: SingleChildScrollView(
-                                      child: Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        children: [
-                                          Text("Per favore seleziona un gioco prima di premere il bottone 'Inizia il gioco'"),
+                                  : _selectedGame == 'Workspace Volts'
+                                  ? SafetyApp()
+                                    : AlertDialog(
+                                        title: const Text("Gioco Non Selezionato"),
+                                        content: SingleChildScrollView(
+                                          child: Column(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            children: [
+                                              Text("Per favore seleziona un gioco prima di premere il bottone 'Inizia il gioco'"),
+                                            ],
+                                          ),
+                                        ),
+                                        actions: [
+                                          TextButton(
+                                            onPressed: Navigator.of(context).pop,
+                                            child: const Text("Chiudi"),
+                                          ),
                                         ],
                                       ),
-                                    ),
-                                    actions: [
-                                      TextButton(
-                                        onPressed: Navigator.of(context).pop,
-                                        child: const Text("Chiudi"),
-                                      ),
-                                    ],
-                                  ),
                       ),
                     );
                   },

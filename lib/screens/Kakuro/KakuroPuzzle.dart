@@ -155,7 +155,7 @@ class _Kakuro extends State<KakuroStateful> {
     });
   }
 
-  stopTimer() {
+  void stopTimer() {
     timer?.cancel();
   }
 
